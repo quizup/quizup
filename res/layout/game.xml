@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:gravity="center"
+              android:layout_height="match_parent">
+
+    <LinearLayout android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:orientation="horizontal"
+                  android:gravity="center">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="90dp"
+                android:text="When did Mahatma Gandhi died?"
+                android:textSize="35dp"
+                android:gravity="center"
+                android:id="@+id/Question"
+                android:layout_margin="5dp"
+                android:layout_weight="1"/>
+
+    </LinearLayout>
+    <LinearLayout android:layout_width="fill_parent"
+                  android:layout_height="50dp"
+                  android:clickable="false">
+                  </LinearLayout>
+
+    <LinearLayout android:layout_width="fill_parent"
+                  android:orientation="vertical"
+                  android:layout_height="fill_parent" android:padding="10dp">
+        <Button
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="January 30, 1948"
+                android:id="@+id/one"
+                android:textSize="30dp" android:padding="15dp"/>
+
+        <Button
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="January 30, 1948"
+                android:id="@+id/two"
+                android:textSize="30dp" android:padding="15dp"/>
+
+        <Button
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="January 30, 1948"
+                android:id="@+id/three"
+                android:textSize="30dp" android:padding="15dp"/>
+
+        <Button
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="January 30, 1948"
+                android:id="@+id/four"
+                android:textSize="30dp" android:padding="15dp"/>
+
+    </LinearLayout>
+
+</LinearLayout>
+
+

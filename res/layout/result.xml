@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:gravity="center"
+              android:layout_height="match_parent">
+
+    <LinearLayout android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:orientation="horizontal"
+                  android:gravity="center">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="90dp"
+                android:text="player 1 win....!!!!!"
+                android:textSize="20dp"
+                android:gravity="center"
+                android:id="@+id/win"
+                android:layout_margin="5dp"
+                android:layout_weight="1"/>
+    </LinearLayout>
+
+    <LinearLayout android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:orientation="horizontal"
+                  android:gravity="center">
+        <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Play Again"
+                android:id="@+id/play_again"
+                android:textSize="20dp" android:layout_column="29"/>
+        <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Quit"
+                android:id="@+id/quit"
+                android:textSize="20dp" android:layout_column="29"/>
+    </LinearLayout>
+
+</LinearLayout>
