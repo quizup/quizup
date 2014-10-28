@@ -1,4 +1,4 @@
-package com.example.quizup;
+package com.example.quizup.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -6,6 +6,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import com.example.quizup.lib.FirebaseHelper;
+import com.example.quizup.lib.QuizupHelper;
+import com.example.quizup.R;
+import com.example.quizup.lib.QuizupMainLIb;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
@@ -16,12 +20,13 @@ import java.util.List;
 
 public class QuizupMain extends Activity {
     private final FirebaseHelper firebaseHelper = new FirebaseHelper();
-    private final QuizupHelper quizupHelper = new QuizupHelper();
+    private final QuizupHelper quizupHelper = new QuizupHelper(new QuizupMainLIb());
     private final String token = "lLwXjNDm5algYXbUEEWekyVr30cgH9nQVW3yiDAw";
     private final String game = "game";
     private final String player = "player_1";
     private HashMap<String,Object> nextQuestion;
     private Firebase questionRef = null;
+    private Firebase answerRef = null;
     private Button one;
     private Button two;
     private Button three;
@@ -47,10 +52,10 @@ public class QuizupMain extends Activity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 TextView question = (TextView) findViewById(R.id.question);
                 nextQuestion = (HashMap<String, Object>) dataSnapshot.getValue();
-                Log.d("data: ", nextQuestion.toString());
+                Log.d("question:data: ", nextQuestion.toString());
                 List<String> options = (List<String>) nextQuestion.get("options");
                 setClickable(true, one, two, three, four);
-                question.setText(nextQuestion.get("current_question").toString());
+                question.setText(nextQuestion.get("question").toString());
                 one.setText(options.get(0));
                 two.setText(options.get(1));
                 three.setText(options.get(2));
@@ -65,7 +70,10 @@ public class QuizupMain extends Activity {
     }
     public void onClickButton(View v){
         String chosenAnswer = ((Button)v).getText().toString();
-        quizupHelper.putAnswerToFirebase(chosenAnswer,nextQuestion,questionRef,"https://quizup.firebaseio.com/test/" + game + "/" + player,token);
+        if (answerRef == null){
+            answerRef = firebaseHelper.authenticateToFirebase("https://quizup.firebaseio.com/test/" + game + "/" + player,token);
+        }
+        quizupHelper.putAnswerToFirebase(chosenAnswer,nextQuestion,answerRef);
         Log.d("Answer chosen:", chosenAnswer);
         setClickable(false, one, two, three, four);
     }

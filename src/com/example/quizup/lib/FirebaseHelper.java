@@ -1,4 +1,4 @@
-package com.example.quizup;
+package com.example.quizup.lib;
 
 import android.util.Log;
 import com.firebase.client.AuthData;

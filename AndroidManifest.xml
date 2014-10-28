@@ -6,7 +6,7 @@
     <uses-sdk android:minSdkVersion="15"/>
     <uses-permission android:name="android.permission.INTERNET"/>
     <application android:label="@string/app_name" android:icon="@drawable/quiz">
-        <activity android:name=".QuizupMain"
+        <activity android:name=".activity.QuizupMain"
                   android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
