@@ -1,7 +1,5 @@
 package com.example.quizup.lib;
 
-import android.util.Log;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,7 +14,6 @@ public class QuizupMainLIb {
         answerDetails.put("timeTaken", "5");
         HashMap<String,Map> answerToQuestion = new HashMap<String, Map>();
         answerToQuestion.put(question.get("question").toString(), answerDetails);
-        Log.d("answer details",answerToQuestion.toString());
         return answerToQuestion;
     }
 }

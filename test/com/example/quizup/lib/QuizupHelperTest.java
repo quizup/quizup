@@ -1,8 +1,6 @@
-package com.example.quizup;
+package com.example.quizup.lib;
 
 
-import com.example.quizup.lib.QuizupHelper;
-import com.example.quizup.lib.QuizupMainLIb;
 import com.firebase.client.Firebase;
 import org.junit.Before;
 import org.junit.Test;
