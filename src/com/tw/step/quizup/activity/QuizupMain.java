@@ -22,8 +22,6 @@ import java.util.TimerTask;
 
 import static com.tw.step.quizup.services.QuizUpService.QUESTION_ACTION;
 
-import static com.tw.step.quizup.services.QuizUpService.QUESTION_ACTION;
-
 public class QuizupMain extends Activity {
     private QuizUpService quizUpService;
 
@@ -45,6 +43,7 @@ public class QuizupMain extends Activity {
     private BroadcastReceiver receiver;
     private IntentFilter question_receiver;
     private ServiceConnection serviceConnection;
+    private QuizUpService myService;
 
     /**
      * Called when the activity is first created.
@@ -78,6 +77,7 @@ public class QuizupMain extends Activity {
             @Override
             public void onServiceConnected(ComponentName componentName, IBinder service) {
                 Log.d("service", "Service Connected");
+                myService = ((QuizUpService.Factory)service).getService();
             }
 
             @Override
@@ -90,10 +90,9 @@ public class QuizupMain extends Activity {
 
     public void onClickButton(View v){
         String chosenAnswer = ((Button)v).getText().toString();
-        if (answerRef == null){
-            answerRef = firebaseHelper.authenticateToFirebase("https://quizup.firebaseio.com/"+environment+"/game/player1",token);
-        }
-//        quizupHelper.putAnswerToFirebase(chosenAnswer, questions,answerRef);
+        TextView currentStringQuestion = ((TextView) findViewById(R.id.question));
+        Object currentQuestion = quizupHelper.getCurrentQuestion(myService.getQuestions(), currentStringQuestion.getText().toString());
+        quizupHelper.putAnswerToFirebase(chosenAnswer,5, currentQuestion, answerRef);
         setClickable(false, one, two, three, four);
     }
 

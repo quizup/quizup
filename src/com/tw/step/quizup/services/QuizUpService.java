@@ -18,10 +18,16 @@ public class QuizUpService extends Service{
     public final static String QUESTION_ACTION = "com.tw.step.quizup.QUESTION_RECIEVER";
     private FirebaseHelper firebaseHelper = new FirebaseHelper();
     private Firebase questionRef;
+    private Firebase answerRef;
     private final String token = "lLwXjNDm5algYXbUEEWekyVr30cgH9nQVW3yiDAw";
     private final String environment = "test";
+
+
     private ArrayList<Object> questions = new ArrayList<Object>();
 
+    public ArrayList<Object> getQuestions() {
+        return questions;
+    }
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -42,7 +48,7 @@ public class QuizUpService extends Service{
             }
         });
 
-        return new MyBinder();
+        return new Factory();
     }
 
     public void broadcastQuestions() {
@@ -52,8 +58,7 @@ public class QuizUpService extends Service{
         sendBroadcast(intent);
     }
 
-
-    public class MyBinder extends Binder {
+    public class Factory extends Binder {
 
         public QuizUpService getService() {
             return QuizUpService.this;

@@ -7,15 +7,14 @@ public class QuizupMainLIb {
     public QuizupMainLIb() {
     }
 
-    public Map<String, Map> createAnswerMap(String chosenAnswer, Map<String, Object> question) {
-        Map<String, String> answerDetails = new HashMap<String, String>();
-        String isRightAnswer = chosenAnswer.equalsIgnoreCase(question.get("answer").toString()) ? "True" : "False";
+    public Map<String, Object> createAnswerMap(String chosenAnswer, Integer timeTaken, Object questionObject) {
+        HashMap<String, Object> question = (HashMap<String, Object>) questionObject;
+        Map<String, Object> answerDetails = new HashMap<String, Object>();
+
+        Boolean isRightAnswer = chosenAnswer.equalsIgnoreCase(question.get("answer").toString());
         answerDetails.put("rightAnswerGiven", isRightAnswer);
-        answerDetails.put("timeTaken", "5");
-        answerDetails.put("question", question.get("question").toString());
-        HashMap<String,Map> answerToQuestion = new HashMap<String, Map>();
-        answerToQuestion.put("current_answer", answerDetails);
-        return answerToQuestion;
+        answerDetails.put("timeTaken", timeTaken);
+        return answerDetails;
     }
 
 }
