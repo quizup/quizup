@@ -1,4 +1,4 @@
-package com.example.quizup.lib;
+package com.tw.step.quizup.lib;
 
 import org.junit.Test;
 
@@ -17,9 +17,10 @@ public class QuizupMainLIbTest {
         questionMap.put("answer", ANSWER);
         questionMap.put("question", QUESTION);
         Map<String,Map> answerMap =  lIb.createAnswerMap(ANSWER,questionMap);
-        Map<String,String> answerDetails = answerMap.get(QUESTION);
+        Map<String,String> answerDetails = answerMap.get("current_answer");
         assertEquals("True",answerDetails.get("rightAnswerGiven"));
         assertEquals("5",answerDetails.get("timeTaken"));
+        assertEquals(QUESTION,answerDetails.get("question"));
     }
 
     @Test
@@ -32,8 +33,9 @@ public class QuizupMainLIbTest {
         questionMap.put("answer", ANSWER);
         questionMap.put("question", QUESTION);
         Map<String,Map> answerMap =  lIb.createAnswerMap(CHOSEN_ANSWER,questionMap);
-        Map<String,String> answerDetails = answerMap.get(QUESTION);
+        Map<String,String> answerDetails = answerMap.get("current_answer");
         assertEquals("False",answerDetails.get("rightAnswerGiven"));
         assertEquals("5",answerDetails.get("timeTaken"));
+        assertEquals(QUESTION,answerDetails.get("question"));
     }
 }

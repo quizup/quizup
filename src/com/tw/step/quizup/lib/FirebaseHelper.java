@@ -1,4 +1,4 @@
-package com.example.quizup.lib;
+package com.tw.step.quizup.lib;
 
 import android.util.Log;
 import com.firebase.client.AuthData;
@@ -17,7 +17,7 @@ public class FirebaseHelper {
 
             @Override
             public void onAuthenticationError(FirebaseError firebaseError) {
-                Log.e("Login Error", firebaseError.getDetails());
+                Log.e("Login Error :", firebaseError.getDetails());
             }
         });
         return firebaseRef;

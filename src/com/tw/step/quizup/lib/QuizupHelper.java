@@ -1,4 +1,4 @@
-package com.example.quizup.lib;
+package com.tw.step.quizup.lib;
 
 import com.firebase.client.Firebase;
 

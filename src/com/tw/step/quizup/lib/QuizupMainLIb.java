@@ -1,4 +1,4 @@
-package com.example.quizup.lib;
+package com.tw.step.quizup.lib;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -12,8 +12,10 @@ public class QuizupMainLIb {
         String isRightAnswer = chosenAnswer.equalsIgnoreCase(question.get("answer").toString()) ? "True" : "False";
         answerDetails.put("rightAnswerGiven", isRightAnswer);
         answerDetails.put("timeTaken", "5");
+        answerDetails.put("question", question.get("question").toString());
         HashMap<String,Map> answerToQuestion = new HashMap<String, Map>();
-        answerToQuestion.put(question.get("question").toString(), answerDetails);
+        answerToQuestion.put("current_answer", answerDetails);
         return answerToQuestion;
     }
+
 }
