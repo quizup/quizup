@@ -22,6 +22,8 @@ import java.util.TimerTask;
 
 import static com.tw.step.quizup.services.QuizUpService.QUESTION_ACTION;
 
+import static com.tw.step.quizup.services.QuizUpService.QUESTION_ACTION;
+
 public class QuizupMain extends Activity {
     private QuizUpService quizUpService;
 

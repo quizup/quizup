@@ -14,7 +14,6 @@
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="90dp"
-                android:text="When did Mahatma Gandhi died?"
                 android:textSize="35dp"
                 android:gravity="center"
                 android:id="@+id/question"
@@ -33,7 +32,6 @@
         <Button
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="January 30, 1948"
                 android:id="@+id/one"
                 android:onClick="onClickButton"
                 android:textSize="30dp" android:padding="15dp"/>
@@ -41,7 +39,6 @@
         <Button
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="January 30, 1948"
                 android:onClick="onClickButton"
                 android:id="@+id/two"
                 android:textSize="30dp" android:padding="15dp"/>
@@ -49,7 +46,6 @@
         <Button
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="January 30, 1948"
                 android:onClick="onClickButton"
                 android:id="@+id/three"
                 android:textSize="30dp" android:padding="15dp"/>
@@ -57,7 +53,6 @@
         <Button
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="January 30, 1948"
                 android:onClick="onClickButton"
                 android:id="@+id/four"
                 android:textSize="30dp" android:padding="15dp"/>
