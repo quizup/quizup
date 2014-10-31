@@ -15,6 +15,7 @@ import com.tw.step.quizup.lib.QuizupHelper;
 import com.tw.step.quizup.lib.QuizupMainLIb;
 import com.tw.step.quizup.services.QuizUpService;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Timer;
@@ -44,6 +45,7 @@ public class QuizupMain extends Activity {
     private IntentFilter question_receiver;
     private ServiceConnection serviceConnection;
     private QuizUpService myService;
+    private Date questionShowingTime;
 
     /**
      * Called when the activity is first created.
@@ -92,7 +94,8 @@ public class QuizupMain extends Activity {
         String chosenAnswer = ((Button)v).getText().toString();
         TextView currentStringQuestion = ((TextView) findViewById(R.id.question));
         Object currentQuestion = quizupHelper.getCurrentQuestion(myService.getQuestions(), currentStringQuestion.getText().toString());
-        quizupHelper.putAnswerToFirebase(chosenAnswer,5, currentQuestion, answerRef);
+        Integer timeInSeconds = (int) ((new Date().getTime() / 1000) - (questionShowingTime.getTime() / 1000));
+        quizupHelper.putAnswerToFirebase(chosenAnswer,timeInSeconds, currentQuestion, answerRef);
         setClickable(false, one, two, three, four);
     }
 
@@ -117,6 +120,7 @@ public class QuizupMain extends Activity {
                         }
                         Object question = questions.get(currentIndex);
                         setQuestion(question);
+                        questionShowingTime = new Date();
                         currentIndex++;
                     }
                 });
