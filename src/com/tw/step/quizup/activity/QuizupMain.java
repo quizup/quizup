@@ -57,6 +57,9 @@ public class QuizupMain extends Activity {
         question_receiver = new IntentFilter(QUESTION_ACTION);
         setContentView(R.layout.game);
         startQuizUpService();
+        Firebase.setAndroidContext(this);
+        //TODO HAVE TO MOVE THIS ANSWERREF TO SERVICE
+        answerRef = firebaseHelper.authenticateToFirebase("https://quizup.firebaseio.com/test/game/player1/answers", token);
 
         one = (Button) findViewById(R.id.one);
         two = (Button) findViewById(R.id.two);
