@@ -15,7 +15,6 @@ import com.tw.step.quizup.lib.QuizupHelper;
 import com.tw.step.quizup.lib.QuizupMainLIb;
 import com.tw.step.quizup.services.QuizUpService;
 
-import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -47,6 +46,7 @@ public class QuizupMain extends Activity {
     private ServiceConnection serviceConnection;
     private QuizUpService myService;
     private Date questionShowingTime;
+    private boolean clicked = true;
 
     /**
      * Called when the activity is first created.
@@ -95,7 +95,12 @@ public class QuizupMain extends Activity {
     }
 
     public void onClickButton(View v){
+        clicked = true;
         String chosenAnswer = ((Button)v).getText().toString();
+        submitAnswer(chosenAnswer);
+    }
+
+    private void submitAnswer(String chosenAnswer) {
         TextView currentStringQuestion = ((TextView) findViewById(R.id.question));
         Object currentQuestion = quizupHelper.getCurrentQuestion(myService.getQuestions(), currentStringQuestion.getText().toString());
         Double millisecondDifference = (double)new Date().getTime() - questionShowingTime.getTime();
@@ -119,6 +124,8 @@ public class QuizupMain extends Activity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        if(!clicked)
+                            submitAnswer("");
                         setClickable(true,one,two,three,four);
                         if (currentIndex  == questions.size()-1){
                             timer.cancel();
@@ -127,6 +134,7 @@ public class QuizupMain extends Activity {
                         setQuestion(question);
                         questionShowingTime = new Date();
                         currentIndex++;
+                        clicked = false;
                     }
                 });
             }
