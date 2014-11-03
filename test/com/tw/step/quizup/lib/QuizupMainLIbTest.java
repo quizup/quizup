@@ -16,10 +16,10 @@ public class QuizupMainLIbTest {
         Map<String,Object> questionMap = new HashMap<String, Object>();
         questionMap.put("answer", ANSWER);
         questionMap.put("question", QUESTION);
-        Map<String,Object> answerMap =  lIb.createAnswerMap(ANSWER, 5, questionMap);
+        Map<String,Object> answerMap =  lIb.createAnswerMap(ANSWER, Double.valueOf(5), questionMap);
 
         assertEquals(true,answerMap.get("rightAnswerGiven"));
-        assertEquals(5,answerMap.get("timeTaken"));
+        assertEquals(Double.valueOf(5),answerMap.get("timeTaken"));
     }
 
     @Test
@@ -31,8 +31,8 @@ public class QuizupMainLIbTest {
         Map<String,Object> questionMap = new HashMap<String, Object>();
         questionMap.put("answer", ANSWER);
         questionMap.put("question", QUESTION);
-        Map<String,Object> answerMap =  lIb.createAnswerMap(CHOSEN_ANSWER,5,questionMap);
+        Map<String,Object> answerMap =  lIb.createAnswerMap(CHOSEN_ANSWER,Double.valueOf(5),questionMap);
         assertEquals(false,answerMap.get("rightAnswerGiven"));
-        assertEquals(5,answerMap.get("timeTaken"));
+        assertEquals(Double.valueOf(5),answerMap.get("timeTaken"));
     }
 }

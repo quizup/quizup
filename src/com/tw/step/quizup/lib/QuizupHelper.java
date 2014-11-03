@@ -15,7 +15,7 @@ public class QuizupHelper {
         this.quizupMainLIb = quizupMainLIb;
         this.allAnswers = new ArrayList<Map<String, Object>>();
     }
-    public void putAnswerToFirebase(String chosenAnswer, Integer timeTaken, Object currentQuestion, Firebase answerRef){
+    public void putAnswerToFirebase(String chosenAnswer, Double timeTaken, Object currentQuestion, Firebase answerRef){
         Map<String, Object> answerDetail = quizupMainLIb.createAnswerMap(chosenAnswer, timeTaken, currentQuestion);
         allAnswers.add(answerDetail);
         if(allAnswers.size() == 10)

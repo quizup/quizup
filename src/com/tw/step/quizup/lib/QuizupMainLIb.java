@@ -7,7 +7,7 @@ public class QuizupMainLIb {
     public QuizupMainLIb() {
     }
 
-    public Map<String, Object> createAnswerMap(String chosenAnswer, Integer timeTaken, Object questionObject) {
+    public Map<String, Object> createAnswerMap(String chosenAnswer, Double timeTaken, Object questionObject) {
         HashMap<String, Object> question = (HashMap<String, Object>) questionObject;
         Map<String, Object> answerDetails = new HashMap<String, Object>();
 

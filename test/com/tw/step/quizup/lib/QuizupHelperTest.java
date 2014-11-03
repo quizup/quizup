@@ -29,7 +29,7 @@ public class QuizupHelperTest {
 
     @Test
     public void creates_answer_to_put_on_firebase() {
-        int timeTaken = 4;
+        double timeTaken = 4;
         when(quizupMainLIb.createAnswerMap(myanswer, timeTaken, question)).thenReturn(answerMap);
 
         helper.putAnswerToFirebase(myanswer, timeTaken,question , firebaseRef);
@@ -39,7 +39,7 @@ public class QuizupHelperTest {
 
     @Test
     public void creates_answer_map_but_does_not_put_to_firebase() {
-        int timeTaken = 4;
+        double timeTaken = 4;
         when(quizupMainLIb.createAnswerMap(myanswer, timeTaken, question)).thenReturn(answerMap);
         helper.putAnswerToFirebase(myanswer,timeTaken, question, firebaseRef);
         verify(quizupMainLIb,only()).createAnswerMap(myanswer, timeTaken,question);
@@ -48,12 +48,12 @@ public class QuizupHelperTest {
 
     @Test
     public void creates_answer_map_and_puts_to_firebase_when_10th_answer_has_been_given() {
-        int timeTaken = 4;
+        double timeTaken = 4;
         when(quizupMainLIb.createAnswerMap(myanswer, timeTaken, question)).thenReturn(answerMap);
         for (int index = 0; index < 10; index++) {
             helper.putAnswerToFirebase(myanswer,timeTaken, question, firebaseRef);
         }
         verify(quizupMainLIb,times(10)).createAnswerMap(myanswer, timeTaken,question);
-        verify(firebaseRef,only()).setValue(answerMap);
+        verify(firebaseRef,only()).setValue(anyList());
     }
 }

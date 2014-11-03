@@ -15,6 +15,7 @@ import com.tw.step.quizup.lib.QuizupHelper;
 import com.tw.step.quizup.lib.QuizupMainLIb;
 import com.tw.step.quizup.services.QuizUpService;
 
+import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -94,7 +95,8 @@ public class QuizupMain extends Activity {
         String chosenAnswer = ((Button)v).getText().toString();
         TextView currentStringQuestion = ((TextView) findViewById(R.id.question));
         Object currentQuestion = quizupHelper.getCurrentQuestion(myService.getQuestions(), currentStringQuestion.getText().toString());
-        Integer timeInSeconds = (int) ((new Date().getTime() / 1000) - (questionShowingTime.getTime() / 1000));
+        Double millisecondDifference = (double)new Date().getTime() - questionShowingTime.getTime();
+        double timeInSeconds = Double.parseDouble(String.format("%.2f", millisecondDifference / 1000));
         quizupHelper.putAnswerToFirebase(chosenAnswer,timeInSeconds, currentQuestion, answerRef);
         setClickable(false, one, two, three, four);
     }
