@@ -127,11 +127,11 @@ public class QuizupMain extends Activity {
                         if(!clicked)
                             submitAnswer("");
                         setClickable(true,one,two,three,four);
-                        if (currentIndex  == questions.size()-1){
-                            timer.cancel();
-                        }
-                        Object question = questions.get(currentIndex);
-                        setQuestion(question);
+                        if (currentIndex  == questions.size()) timer.cancel();
+                        try{
+                            Object question = questions.get(currentIndex);
+                            setQuestion(question);
+                        }catch (IndexOutOfBoundsException e){}
                         questionShowingTime = new Date();
                         currentIndex++;
                         clicked = false;
