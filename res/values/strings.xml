@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">quizup</string>
-    <string name="gameUrl">http://quizup-161902.apse1.nitrousbox.com:8086/login?</string>
+    <string name="gameUrl">http://10.4.22.243:8086/login?</string>
     <string name="questionInterval">10</string>
 </resources>
