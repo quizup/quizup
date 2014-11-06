@@ -22,5 +22,4 @@ public class FirebaseHelper {
         });
         return firebaseRef;
     }
-
 }

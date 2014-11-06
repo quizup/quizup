@@ -16,7 +16,7 @@ import java.io.IOException;
 
 import static com.example.quizup.R.id;
 
-public class LoginActivity extends Activity{
+public class LoginActivity extends Activity {
     private ServiceConnection serviceConnection;
     private LoginService loginService;
 
@@ -38,7 +38,7 @@ public class LoginActivity extends Activity{
             @Override
             public void onServiceConnected(ComponentName componentName, IBinder service) {
                 Log.d("service", "Login Service Connected");
-                loginService = ((LoginService.LoginServiceFactory)service).getService();
+                loginService = ((LoginService.LoginServiceFactory) service).getService();
             }
 
             @Override

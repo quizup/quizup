@@ -10,20 +10,22 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
+import com.tw.step.quizup.activity.Winner;
 import com.tw.step.quizup.lib.FirebaseHelper;
 import com.tw.step.quizup.lib.QuizupHelper;
 
 import java.util.ArrayList;
 
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
 
-public class QuizUpService extends Service{
+public class QuizUpService extends Service {
     public final static String QUESTION_ACTION = "com.tw.step.quizup.QUESTION_RECIEVER";
     private FirebaseHelper firebaseHelper = new FirebaseHelper();
     private Firebase answerRef = null;
     private Firebase questionRef;
 
-    private String token ;
+    private String token;
     private String gameUrl;
     private String username;
     private String playerId;
@@ -39,20 +41,42 @@ public class QuizUpService extends Service{
         initializeFirebaseReferences();
     }
 
+    public void listenForWinner(String firebaseUrl, String token) {
+        Firebase firebase = firebaseHelper.authenticateToFirebase(firebaseUrl, token);
+        firebase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Intent intent = new Intent(getBaseContext(), Winner.class);
+                if (dataSnapshot.getValue() != null) {
+                    System.out.println(dataSnapshot.getValue());
+                    intent.putExtra("winner", dataSnapshot.getValue().toString());
+                    intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
+    }
+
+
     private void initializeFirebaseReferences() {
         Firebase.setAndroidContext(this);
         questionRef = firebaseHelper.authenticateToFirebase(gameUrl + "/questions", token);
         answerRef = firebaseHelper.authenticateToFirebase(gameUrl + "/" + playerId + "/answers", token);
         startListenerForQuestions();
-
     }
 
     private void startListenerForQuestions() {
         questionRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                questions = (ArrayList<Object>)dataSnapshot.getValue();
+                questions = (ArrayList<Object>) dataSnapshot.getValue();
                 broadcastQuestions();
+                listenForWinner(gameUrl + "/gameStatus/winner", token);
             }
 
             @Override
@@ -77,7 +101,7 @@ public class QuizUpService extends Service{
 
     public void broadcastQuestions() {
         Intent intent = new Intent();
-        intent.putExtra("questions",questions);
+        intent.putExtra("questions", questions);
         intent.setAction(QUESTION_ACTION);
         sendBroadcast(intent);
     }
