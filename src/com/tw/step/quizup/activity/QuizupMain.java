@@ -131,7 +131,8 @@ public class QuizupMain extends Activity {
                 });
             }
         };
-        timer.schedule(task, 0, 5000);
+        Integer questionInterval = Integer.parseInt(getResources().getString(R.string.questionInterval)) * 1000;
+        timer.schedule(task, 0, questionInterval);
     }
 
     private void setQuestion(Object question) {
