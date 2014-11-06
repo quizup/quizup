@@ -1,12 +1,7 @@
 package com.tw.step.quizup.activity;
 
 import android.app.Activity;
-import android.content.BroadcastReceiver;
-import android.content.ComponentName;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.ServiceConnection;
+import android.content.*;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
@@ -17,11 +12,7 @@ import com.example.quizup.R;
 import com.firebase.client.Firebase;
 import com.tw.step.quizup.services.QuizUpService;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 
 import static com.tw.step.quizup.services.QuizUpService.QUESTION_ACTION;
 
@@ -48,18 +39,19 @@ public class QuizupMain extends Activity {
         setContentView(R.layout.game);
         startQuizUpService();
         Firebase.setAndroidContext(this);
-
         one = (Button) findViewById(R.id.one);
         two = (Button) findViewById(R.id.two);
         three = (Button) findViewById(R.id.three);
         four = (Button) findViewById(R.id.four);
-        questionArea = (TextView)findViewById(R.id.question);
+        questionArea = (TextView) findViewById(R.id.question);
         receiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 Bundle extras = intent.getExtras();
-                List<Object> questions = (List<Object>)extras.get("questions");
-                showQuestions(questions);
+                List<Object> questions = (List<Object>) extras.get("questions");
+                if (questions != null) {
+                    showQuestions(questions);
+                }
             }
         };
         registerReceiver(receiver, question_receiver);
@@ -87,6 +79,7 @@ public class QuizupMain extends Activity {
         clicked = true;
         String chosenAnswer = ((Button) v).getText().toString();
         submitAnswer(chosenAnswer);
+
     }
 
     private void submitAnswer(String chosenAnswer) {

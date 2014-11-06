@@ -34,7 +34,7 @@ public class LoginService extends Service {
     }
 
     public void loginToGame(String email, String password) throws IOException {
-        String loginUrl = "http://quizup-161902.apse1.nitrousbox.com:8086/login?";
+        String loginUrl = "http://192.168.2.2:8086/login?";
         String credentials = prepareCredentials(email, password);
         final HttpClient client = new DefaultHttpClient();
         final HttpPost post = new HttpPost(loginUrl + credentials);

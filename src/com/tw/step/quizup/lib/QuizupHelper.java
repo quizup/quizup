@@ -17,10 +17,11 @@ public class QuizupHelper {
     public QuizupHelper() {
         this.allAnswers = new ArrayList<Map<String, Object>>();
     }
-    public void putAnswerToFirebase(String chosenAnswer, Double timeTaken, Object currentQuestion, Firebase answerRef){
+
+    public void putAnswerToFirebase(String chosenAnswer, Double timeTaken, Object currentQuestion, Firebase answerRef) {
         Map<String, Object> answerDetail = createAnswerMap(chosenAnswer, timeTaken, currentQuestion);
         allAnswers.add(answerDetail);
-        if(allAnswers.size() == 10)
+        if (allAnswers.size() == 10)
             answerRef.setValue(allAnswers);
     }
 
@@ -28,7 +29,7 @@ public class QuizupHelper {
     public Object getCurrentQuestion(ArrayList<Object> questions, String currentQuestion) {
         for (Object question : questions) {
             HashMap<String, Object> questionMap = (HashMap<String, Object>) question;
-            if(questionMap.get("question").toString().equalsIgnoreCase(currentQuestion))
+            if (questionMap.get("question").toString().equalsIgnoreCase(currentQuestion))
                 return question;
         }
         return null;
