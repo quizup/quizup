@@ -33,27 +33,27 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/one"
-                android:onClick="onClickButton"
+                android:onClick="onClick"
                 android:textSize="20dp" android:padding="15dp"/>
 
         <Button
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:onClick="onClickButton"
+                android:onClick="onClick"
                 android:id="@+id/two"
                 android:textSize="20dp" android:padding="15dp"/>
 
         <Button
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:onClick="onClickButton"
+                android:onClick="onClick"
                 android:id="@+id/three"
                 android:textSize="20dp" android:padding="15dp"/>
 
         <Button
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:onClick="onClickButton"
+                android:onClick="onClick"
                 android:id="@+id/four"
                 android:textSize="20dp" android:padding="15dp"/>
 

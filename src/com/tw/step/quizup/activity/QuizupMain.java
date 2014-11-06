@@ -7,6 +7,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
@@ -40,6 +42,7 @@ public class QuizupMain extends Activity {
     private QuizUpService myService;
     private Date questionShowingTime;
     private boolean clicked = true;
+    private Drawable defaultButtonBackgroundDrawable;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -53,6 +56,9 @@ public class QuizupMain extends Activity {
         two = (Button) findViewById(R.id.two);
         three = (Button) findViewById(R.id.three);
         four = (Button) findViewById(R.id.four);
+
+        defaultButtonBackgroundDrawable = one.getBackground();
+
         questionArea = (TextView)findViewById(R.id.question);
         receiver = new BroadcastReceiver() {
             @Override
@@ -84,10 +90,17 @@ public class QuizupMain extends Activity {
         bindService(intent, serviceConnection, BIND_AUTO_CREATE);
     }
 
-    public void onClickButton(View v) {
+    public void onClick(View v) {
         clicked = true;
-        String chosenAnswer = ((Button) v).getText().toString();
+        Button button = (Button) v;
+        String chosenAnswer = button.getText().toString();
         submitAnswer(chosenAnswer);
+        changeColorOfSelectedButton(button);
+    }
+
+    private void changeColorOfSelectedButton(Button button) {
+        button.setBackgroundColor(getResources().getColor(R.color.buttonClickedColor));
+        button.setTextColor(Color.WHITE);
     }
 
     private void submitAnswer(String chosenAnswer) {
@@ -96,13 +109,19 @@ public class QuizupMain extends Activity {
         Double millisecondDifference = (double) new Date().getTime() - questionShowingTime.getTime();
         double timeInSeconds = Double.parseDouble(String.format("%.2f", millisecondDifference / 1000));
         myService.putAnswerToFirebase(chosenAnswer, timeInSeconds, currentQuestion);
-        setClickable(false, one, two, three, four);
+        setClickableAndRestoreBackground(false, one, two, three, four);
     }
 
-    public void setClickable(boolean setValue, View... v) {
+    public void setClickableAndRestoreBackground(boolean setValue, View... v) {
         for (View view : v) {
+            resetButtonColor(view);
             view.setClickable(setValue);
         }
+    }
+
+    private void resetButtonColor(View view) {
+        view.setBackgroundDrawable(defaultButtonBackgroundDrawable);
+        ((Button)view).setTextColor(Color.BLACK);
     }
 
     public void showQuestions(final List<Object> questions) {
@@ -117,7 +136,7 @@ public class QuizupMain extends Activity {
                     public void run() {
                         if (!clicked)
                             submitAnswer("");
-                        setClickable(true, one, two, three, four);
+                        setClickableAndRestoreBackground(true, one, two, three, four);
                         if (currentIndex == questions.size()) timer.cancel();
                         try {
                             Object question = questions.get(currentIndex);
