@@ -59,7 +59,8 @@ public class QuizupMain extends Activity {
             public void onReceive(Context context, Intent intent) {
                 Bundle extras = intent.getExtras();
                 List<Object> questions = (List<Object>)extras.get("questions");
-                showQuestions(questions);
+                if(questions != null && questions.size() > 0)
+                    showQuestions(questions);
             }
         };
         registerReceiver(receiver, question_receiver);

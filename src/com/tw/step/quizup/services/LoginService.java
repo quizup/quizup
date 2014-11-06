@@ -4,6 +4,7 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
+import com.example.quizup.R;
 import com.tw.step.quizup.activity.QuizupMain;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -34,7 +35,7 @@ public class LoginService extends Service {
     }
 
     public void loginToGame(String email, String password) throws IOException {
-        String loginUrl = "http://quizup-161902.apse1.nitrousbox.com:8086/login?";
+        String loginUrl = getResources().getString(R.string.gameUrl);
         String credentials = prepareCredentials(email, password);
         final HttpClient client = new DefaultHttpClient();
         final HttpPost post = new HttpPost(loginUrl + credentials);
