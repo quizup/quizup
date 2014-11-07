@@ -15,6 +15,7 @@ import com.tw.step.quizup.lib.FirebaseHelper;
 import com.tw.step.quizup.lib.QuizupHelper;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
@@ -49,7 +50,19 @@ public class QuizUpService extends Service {
                 Intent intent = new Intent(getBaseContext(), Winner.class);
                 if (dataSnapshot.getValue() != null) {
                     System.out.println(dataSnapshot.getValue());
-                    intent.putExtra("winner", dataSnapshot.getValue().toString());
+                    HashMap<String,Object> winnerDetails = (HashMap<String, Object>) dataSnapshot.getValue();
+
+                    String opponentPlayer = "player1";
+                    String yourPlayer = "player2";
+                    if (playerId.equalsIgnoreCase("player1")) {
+                        yourPlayer = "player1";
+                        opponentPlayer = "player2";
+                    }
+                    String yourPoints = ((HashMap)winnerDetails.get(yourPlayer)).get("points").toString();
+                    String opponentPoints = ((HashMap)winnerDetails.get(opponentPlayer)).get("points").toString();
+                    intent.putExtra("winner", winnerDetails.get("winner").toString());
+                    intent.putExtra("yourPoints", yourPoints);
+                    intent.putExtra("opponentPoints", opponentPoints);
                     intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
                 }
@@ -76,7 +89,7 @@ public class QuizUpService extends Service {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 questions = (ArrayList<Object>) dataSnapshot.getValue();
                 broadcastQuestions();
-                listenForWinner(gameUrl + "/gameStatus/winner", token);
+                listenForWinner(gameUrl + "/gameStatus", token);
             }
 
             @Override

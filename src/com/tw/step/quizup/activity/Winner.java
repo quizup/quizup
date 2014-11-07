@@ -14,7 +14,13 @@ public class Winner extends Activity {
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
         String winner = (String) extras.get("winner");
-        TextView view = (TextView) findViewById(R.id.win);
-        view.setText(winner + " wins..");
+        String yourPoints = (String) extras.get("yourPoints");
+        String opponentPoints = (String) extras.get("opponentPoints");
+        TextView winnerView = (TextView) findViewById(R.id.win);
+        TextView yourPointsView = (TextView) findViewById(R.id.yourPoints);
+        TextView opponentPointsView = (TextView) findViewById(R.id.opponentPoints);
+        winnerView.setText(winner + " wins..");
+        yourPointsView.setText("You've got "+yourPoints+" points");
+        opponentPointsView.setText("Your opponent got "+opponentPoints+" points");
     }
 }
