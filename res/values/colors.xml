@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <item name="buttonClickedColor" type="color">#FF0D6973</item>
+    <item name="timerColor" type="color">#ff314773</item>
 </resources>

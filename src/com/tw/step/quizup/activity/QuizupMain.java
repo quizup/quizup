@@ -1,15 +1,11 @@
 package com.tw.step.quizup.activity;
 
 import android.app.Activity;
-import android.content.BroadcastReceiver;
-import android.content.ComponentName;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.ServiceConnection;
+import android.content.*;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.IBinder;
 import android.util.Log;
 import android.view.View;
@@ -19,17 +15,12 @@ import com.example.quizup.R;
 import com.firebase.client.Firebase;
 import com.tw.step.quizup.services.QuizUpService;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 import static com.tw.step.quizup.services.QuizUpService.QUESTION_ACTION;
 
 public class QuizupMain extends Activity {
-    private QuizUpService quizUpService;
-
 
     private Button one;
     private Button two;
@@ -126,6 +117,8 @@ public class QuizupMain extends Activity {
 
     public void showQuestions(final List<Object> questions) {
         final Timer timer = new Timer();
+        final TextView timeRemaining = (TextView) findViewById(R.id.time);
+        final Integer questionInterval = Integer.parseInt(getResources().getString(R.string.questionInterval)) * 1000;
         TimerTask task = new TimerTask() {
             Integer currentIndex = 0;
 
@@ -134,6 +127,20 @@ public class QuizupMain extends Activity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        new CountDownTimer(questionInterval,10){
+                            @Override
+                            public void onTick(long millisUntilFinished) {
+                                long millis = millisUntilFinished;
+                                long millisUpto2Points = Long.parseLong(String.valueOf((millis%1000)/10));
+                                String minutesSeconds = String.format("%02d:%02d", TimeUnit.MILLISECONDS.toSeconds(millis) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis)),millisUpto2Points);
+                                timeRemaining.setText(minutesSeconds);
+                            }
+
+                            @Override
+                            public void onFinish() {
+
+                            }
+                        }.start();
                         if (!clicked)
                             submitAnswer("");
                         setClickableAndRestoreBackground(true, one, two, three, four);
@@ -150,7 +157,6 @@ public class QuizupMain extends Activity {
                 });
             }
         };
-        Integer questionInterval = Integer.parseInt(getResources().getString(R.string.questionInterval)) * 1000;
         timer.schedule(task, 0, questionInterval);
     }
 
