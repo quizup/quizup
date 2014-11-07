@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
 import com.example.quizup.R;
-import com.tw.step.quizup.activity.QuizupMain;
+import com.tw.step.quizup.lib.Doable;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
@@ -22,12 +22,33 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 import static java.net.URLDecoder.decode;
 
 public class LoginService extends Service {
     public static String LOGIN_DETAILS_ACTION = "com.tw.step.quizup.LOGIN_DETAILS_RECEIVER";
     private JSONObject jsonresponse;
+
+    private Doable mainActivityStarter;
+    private Doable startLoader = null;
+    private Doable stopLoader = null;
+    private Doable invalidLoginAlert = null;
+
+    public void setStartLoader(Doable startLoader) {
+        this.startLoader = startLoader;
+    }
+
+    public void setStopLoader(Doable stopLoader) {
+        this.stopLoader = stopLoader;
+    }
+
+    public void setInvalidLoginAlert(Doable invalidLoginAlert) {
+        this.invalidLoginAlert = invalidLoginAlert;
+    }
+
+    public void setMainActivityStarter(Doable mainActivityStarter) {
+        this.mainActivityStarter = mainActivityStarter;
+    }
+
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -44,12 +65,18 @@ public class LoginService extends Service {
             @Override
             public void run() {
                 try {
+                    startLoader.doWork();
                     HttpResponse response = client.execute(post);
                     jsonresponse = new JSONObject(EntityUtils.toString(response.getEntity()));
-                    Intent intent = new Intent(getBaseContext(), QuizupMain.class);
-                    intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
-                    setLoginDetails(intent);
-                    startActivity(intent);
+                    int statusCode = response.getStatusLine().getStatusCode();
+                    if(statusCode == 404){
+                        stopLoader.doWork();
+                        invalidLoginAlert.doWork();
+                    }
+                    else{
+                        mainActivityStarter.doWork();
+                    }
+
                 } catch (IOException e) {
                     e.printStackTrace();
                 } catch (JSONException e) {
@@ -61,7 +88,7 @@ public class LoginService extends Service {
         loginThread.start();
     }
 
-    private void setLoginDetails(Intent intent) throws JSONException {
+    public void setLoginDetails(Intent intent) throws JSONException {
         intent.putExtra("token", (String) jsonresponse.get("token"));
         intent.putExtra("gameUrl", (String) jsonresponse.get("gameUrl"));
         intent.putExtra("username", (String) jsonresponse.get("username"));
